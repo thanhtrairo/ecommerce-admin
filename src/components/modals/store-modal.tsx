@@ -18,7 +18,7 @@ const formSchema = z.object({
 })
 
 export const StoreModal = () => {
-  const storeModal = useStoreModal()
+  const { isOpen, onClose } = useStoreModal()
   const [loading, setLoading] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,8 +44,8 @@ export const StoreModal = () => {
     <Modal
       title="Create store"
       description="Add a new store to manage products and categories."
-      isOpen={storeModal.isOpen}
-      onClose={storeModal.onClose}
+      isOpen={isOpen}
+      onClose={onClose}
     >
       <div>
         <div className="space-y-4 py-2 pb-4">
@@ -66,7 +66,7 @@ export const StoreModal = () => {
                   )}
                 />
                 <div className="flex w-full items-center justify-end space-x-2 pt-6">
-                  <Button disabled={loading} variant="outline" onClick={storeModal.onClose}>
+                  <Button disabled={loading} variant="outline" onClick={onClose}>
                     Cancel
                   </Button>
                   <Button disabled={loading} type="submit">
