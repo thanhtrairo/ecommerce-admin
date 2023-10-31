@@ -11,7 +11,7 @@ import { Modal } from '~/components/ui/modal'
 import { Input } from '~/components/ui/input'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form'
 import { Button } from '~/components/ui/button'
-import { useStoreModal } from '~/hooks/use-store-modal'
+import { useStoreModal } from '~/hooks'
 
 const formSchema = z.object({
   name: z.string().min(1),

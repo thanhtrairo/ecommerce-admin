@@ -17,7 +17,7 @@ import {
 } from '~/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
 import { IStore } from '~/models/store'
-import { useStoreModal } from '~/hooks/use-store-modal'
+import { useStoreModal } from '~/hooks'
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
@@ -85,6 +85,7 @@ export default function StoreSwitcher({ className, items = [] }: StoreSwitcherPr
                   setOpen(false)
                   storeModal.onOpen()
                 }}
+                className="cursor-pointer"
               >
                 <PlusCircle className="mr-2 h-5 w-5" />
                 Create Store

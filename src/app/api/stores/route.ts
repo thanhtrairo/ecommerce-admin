@@ -3,25 +3,35 @@ import { NextResponse } from 'next/server'
 
 import prismaDb from '~/lib/prismaDb'
 
-export async function POST(req: Request) {
+const POST = async (req: Request) => {
   try {
     const { userId } = auth()
     const body = await req.json()
 
-    const { name } = body
+    const { name }: { name: string } = body
 
     if (!userId) {
-      return new NextResponse('Unauthorized', { status: 403 })
+      return new NextResponse('Unauthorized', { status: 401 })
     }
 
     if (!name) {
       return new NextResponse('Name is Required', { status: 400 })
     }
 
+    const storeExist = await prismaDb.store.findFirst({
+      where: {
+        name,
+      },
+    })
+
+    if (storeExist?.id) {
+      return new NextResponse('Store already exist', { status: 400 })
+    }
+
     const store = await prismaDb.store.create({
       data: {
-        name,
         userId,
+        name,
       },
     })
 
@@ -30,3 +40,5 @@ export async function POST(req: Request) {
     return new NextResponse('Internal error', { status: 500 })
   }
 }
+
+export { POST }
