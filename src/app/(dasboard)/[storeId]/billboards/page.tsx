@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 
-import prismaDb from '~/lib/prismaDb'
+import prismaDb from '~/lib/prisma-db'
 
 import { BillboardColumn } from './components/columns'
 import { BillboardClient } from './components/client'

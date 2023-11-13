@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import { auth } from '@clerk/nextjs'
 
 import Navbar from '~/components/navbar'
-import prismaDb from '~/lib/prismaDb'
+import prismaDb from '~/lib/prisma-db'
 
 export default async function DashboardLayout({
   children,

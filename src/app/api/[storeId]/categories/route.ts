@@ -1,25 +1,29 @@
 import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
+
 import prismaDb from '~/lib/prisma-db'
 
 const POST = async (req: Request, { params }: { params: { storeId: string } }) => {
   try {
     const { userId } = auth()
-    const body = await req.json()
+    const { name, billboardId } = await req.json()
 
-    const { label, imageUrl } = body
     const { storeId } = params
 
     if (!userId) {
       return new NextResponse('Unauthenticated', { status: 401 })
     }
 
-    if (!label) {
-      return new NextResponse('label is required', { status: 400 })
+    if (!storeId) {
+      return new NextResponse('Store id is required', { status: 400 })
     }
 
-    if (!imageUrl) {
-      return new NextResponse('image url is required', { status: 400 })
+    if (!name) {
+      return new NextResponse('Name is required', { status: 400 })
+    }
+
+    if (!billboardId) {
+      return new NextResponse('Billboard id is required', { status: 400 })
     }
 
     const storeByUserId = await prismaDb.store.findFirst({
@@ -33,17 +37,17 @@ const POST = async (req: Request, { params }: { params: { storeId: string } }) =
       return new NextResponse('store id invalid', { status: 400 })
     }
 
-    const billboard = await prismaDb.billboard.create({
+    const category = await prismaDb.category.create({
       data: {
-        label,
-        imageUrl,
+        name,
+        billboardId,
         storeId,
       },
     })
 
-    return NextResponse.json(billboard)
+    return NextResponse.json(category)
   } catch (error) {
-    return new NextResponse('Internal error', { status: 500 })
+    return new NextResponse('Internal server', { status: 500 })
   }
 }
 

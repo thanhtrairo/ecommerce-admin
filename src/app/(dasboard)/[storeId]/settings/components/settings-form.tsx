@@ -18,6 +18,7 @@ import { Heading } from '~/components/ui/heading'
 import { AlertModal } from '~/components/modals/alert-modal'
 import { ApiAlert } from '~/components/ui/api-alert'
 import { useOrigin } from '~/hooks'
+import { httpRequest } from '~/lib/http-request'
 
 const formSchema = z.object({
   name: z.string().min(2),
@@ -45,7 +46,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const onSubmit = async (data: SettingsFormValues) => {
     try {
       setLoading(true)
-      await axios.patch(`/api/stores/${params.storeId}`, data)
+      await httpRequest.patch(`/api/stores/${params.storeId}`, data)
       router.refresh()
       toast.success('Store updated.')
     } catch (error) {

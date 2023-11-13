@@ -1,5 +1,5 @@
 import { BillboardForm } from './components/billboard-form'
-import prismaDb from '~/lib/prismaDb'
+import prismaDb from '~/lib/prisma-db'
 
 const BillboardPage = async ({ params }: { params: { billboardId: string } }) => {
   const billboard = await prismaDb.billboard.findUnique({

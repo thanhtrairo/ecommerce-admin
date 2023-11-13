@@ -1,7 +1,7 @@
 import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 
-import prismaDb from '~/lib/prismaDb'
+import prismaDb from '~/lib/prisma-db'
 
 const POST = async (req: Request) => {
   try {
@@ -11,7 +11,7 @@ const POST = async (req: Request) => {
     const { name }: { name: string } = body
 
     if (!userId) {
-      return new NextResponse('Unauthorized', { status: 401 })
+      return new NextResponse('Unauthenticated', { status: 401 })
     }
 
     if (!name) {

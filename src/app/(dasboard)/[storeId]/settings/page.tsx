@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import { auth } from '@clerk/nextjs'
 
 import { SettingsForm } from './components/settings-form'
-import prismaDb from '~/lib/prismaDb'
+import prismaDb from '~/lib/prisma-db'
 
 const SettingsPage = async ({ params }: { params: { storeId: string } }) => {
   const { userId } = auth()

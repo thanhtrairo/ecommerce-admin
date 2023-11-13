@@ -21,9 +21,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ disabled, onChange, onRemove,
     setIsMounted(true)
   }, [])
 
-  const onUpload = (result: CldUploadWidgetResults) => {
-    console.log('result', result)
-    // onChange(result.info?.secure_url)
+  const onUpload = (result: CldUploadWidgetResults & { info?: { secure_url?: string } }) => {
+    onChange(result.info?.secure_url || '')
   }
 
   if (!isMounted) {
@@ -40,11 +39,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ disabled, onChange, onRemove,
                 <Trash className="h-4 w-4" />
               </Button>
             </div>
-            <Image fill className="object-cover" alt="Image" src={url} />
+            <Image fill={true} className="object-cover" alt="Image" src={url} />
           </div>
         ))}
       </div>
-      <CldUploadWidget onUpload={onUpload} uploadPreset="t4drjppf">
+      <CldUploadWidget onUpload={onUpload} uploadPreset={process.env.NEXT_PUBLIC_UPLOAD_PRESET_NAME}>
         {({ open }) => {
           const onClick = () => {
             open()
