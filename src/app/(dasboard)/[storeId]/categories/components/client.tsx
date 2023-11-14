@@ -10,7 +10,7 @@ import { Separator } from '~/components/ui/separator'
 import { ApiList } from '~/components/ui/api-list'
 import { columns, CategoryColumn } from './columns'
 
-interface CategoriesClientProps {
+type CategoriesClientProps = {
   data: CategoryColumn[]
 }
 

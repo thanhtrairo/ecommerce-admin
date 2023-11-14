@@ -25,7 +25,7 @@ const formSchema = z.object({
 
 type CategoryFormValues = z.infer<typeof formSchema>
 
-interface CategoryFormProps {
+type CategoryFormProps = {
   initialData: Category | null
   billboards: Billboard[]
 }

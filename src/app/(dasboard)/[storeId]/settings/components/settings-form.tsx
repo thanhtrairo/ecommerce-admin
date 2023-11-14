@@ -26,7 +26,7 @@ const formSchema = z.object({
 
 type SettingsFormValues = z.infer<typeof formSchema>
 
-interface SettingsFormProps {
+type SettingsFormProps = {
   initialData: Store
 }
 

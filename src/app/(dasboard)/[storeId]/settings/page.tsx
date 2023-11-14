@@ -1,16 +1,17 @@
 import { redirect } from 'next/navigation'
-import { auth } from '@clerk/nextjs'
 
 import { SettingsForm } from './components/settings-form'
+import withRequiredLogin from '~/hocs/with-required-login'
 import prismaDb from '~/lib/prisma-db'
 
-const SettingsPage = async ({ params }: { params: { storeId: string } }) => {
-  const { userId } = auth()
-
-  if (!userId) {
-    redirect('/sign-in')
+type SettingPageProps = {
+  userId: string
+  params: {
+    storeId: string
   }
+}
 
+const SettingsPage = async ({ userId, params }: SettingPageProps) => {
   const store = await prismaDb.store.findFirst({
     where: {
       id: params.storeId,
@@ -31,4 +32,4 @@ const SettingsPage = async ({ params }: { params: { storeId: string } }) => {
   )
 }
 
-export default SettingsPage
+export default withRequiredLogin(SettingsPage)

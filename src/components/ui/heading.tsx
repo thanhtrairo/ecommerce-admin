@@ -1,4 +1,4 @@
-interface HeadingProps {
+type HeadingProps = {
   title: string
   description: string
 }

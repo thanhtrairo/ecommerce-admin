@@ -8,10 +8,9 @@ import { DataTable } from '~/components/ui/data-table'
 import { Heading } from '~/components/ui/heading'
 import { Separator } from '~/components/ui/separator'
 import { ApiList } from '~/components/ui/api-list'
-
 import { columns, BillboardColumn } from './columns'
 
-interface BillboardClientProps {
+type BillboardClientProps = {
   data: BillboardColumn[]
 }
 

@@ -1,4 +1,4 @@
-export interface IStore {
+export type IStore = {
   id: string
   name: string
   userId: string

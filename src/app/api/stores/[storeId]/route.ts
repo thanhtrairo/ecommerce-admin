@@ -28,6 +28,7 @@ const PATCH = async (req: Request, { params }: { params: { storeId: string } }) 
         id: storeId,
       },
       name,
+      userId,
     },
   })
 
@@ -38,6 +39,7 @@ const PATCH = async (req: Request, { params }: { params: { storeId: string } }) 
   const store = await prismaDb.store.update({
     where: {
       id: storeId,
+      userId,
     },
     data: {
       name,
@@ -49,7 +51,12 @@ const PATCH = async (req: Request, { params }: { params: { storeId: string } }) 
 
 const DELETE = async (_req: Request, { params }: { params: { storeId: string } }) => {
   try {
+    const { userId } = auth()
     const { storeId } = params
+
+    if (!userId) {
+      return new NextResponse('Unauthenticated', { status: 401 })
+    }
 
     if (!storeId) {
       return new NextResponse('Store id is required', { status: 400 })
@@ -58,6 +65,7 @@ const DELETE = async (_req: Request, { params }: { params: { storeId: string } }
     const store = await prismaDb.store.delete({
       where: {
         id: storeId,
+        userId,
       },
     })
 

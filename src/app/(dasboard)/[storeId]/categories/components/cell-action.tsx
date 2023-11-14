@@ -17,7 +17,7 @@ import {
 import { AlertModal } from '~/components/modals/alert-modal'
 import { CategoryColumn } from './columns'
 
-interface CellActionProps {
+type CellActionProps = {
   data: CategoryColumn
 }
 

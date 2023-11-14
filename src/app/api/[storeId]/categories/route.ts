@@ -14,10 +14,6 @@ const POST = async (req: Request, { params }: { params: { storeId: string } }) =
       return new NextResponse('Unauthenticated', { status: 401 })
     }
 
-    if (!storeId) {
-      return new NextResponse('Store id is required', { status: 400 })
-    }
-
     if (!name) {
       return new NextResponse('Name is required', { status: 400 })
     }

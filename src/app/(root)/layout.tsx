@@ -1,15 +1,14 @@
 import { redirect } from 'next/navigation'
-import { auth } from '@clerk/nextjs'
 
 import prismaDb from '~/lib/prisma-db'
+import withRequiredLogin from '~/hocs/with-required-login'
 
-export default async function SetupLayout({ children }: { children: React.ReactNode }) {
-  const { userId } = auth()
+type SetupLayoutProps = {
+  userId: string
+  children: React.ReactNode
+}
 
-  if (!userId) {
-    redirect('/sign-in')
-  }
-
+const SetupLayout = async ({ userId, children }: SetupLayoutProps) => {
   const store = await prismaDb.store.findFirst({
     where: {
       userId,
@@ -22,3 +21,5 @@ export default async function SetupLayout({ children }: { children: React.ReactN
 
   return <>{children}</>
 }
+
+export default withRequiredLogin(SetupLayout)

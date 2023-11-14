@@ -1,22 +1,18 @@
 import { redirect } from 'next/navigation'
-import { auth } from '@clerk/nextjs'
 
 import Navbar from '~/components/navbar'
+import withRequiredLogin from '~/hocs/with-required-login'
 import prismaDb from '~/lib/prisma-db'
 
-export default async function DashboardLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode
-  params: { storeId: string }
-}) {
-  const { userId } = auth()
-
-  if (!userId) {
-    redirect('/sign-in')
+type DashboardLayoutProps = {
+  userId: string
+  params: {
+    storeId: string
   }
+  children: React.ReactNode
+}
 
+const DashboardLayout = async ({ userId, params, children }: DashboardLayoutProps) => {
   const store = await prismaDb.store.findFirst({
     where: {
       id: params.storeId,
@@ -35,3 +31,5 @@ export default async function DashboardLayout({
     </>
   )
 }
+
+export default withRequiredLogin(DashboardLayout)

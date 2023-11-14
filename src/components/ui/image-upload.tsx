@@ -7,7 +7,7 @@ import { ImagePlus, Trash } from 'lucide-react'
 
 import { Button } from '~/components/ui/button'
 
-interface ImageUploadProps {
+type ImageUploadProps = {
   disabled?: boolean
   onChange: (value: string) => void
   onRemove: (value: string) => void

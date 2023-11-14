@@ -15,13 +15,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '~
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 
-interface DataTableProps<TData, TValue> {
+type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   searchKey: string
 }
 
-export function DataTable<TData, TValue>({ columns, data, searchKey }: DataTableProps<TData, TValue>) {
+const DataTable = <TData, TValue>({ columns, data, searchKey }: DataTableProps<TData, TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const table = useReactTable({
     data,
@@ -90,3 +90,5 @@ export function DataTable<TData, TValue>({ columns, data, searchKey }: DataTable
     </div>
   )
 }
+
+export { DataTable }

@@ -21,6 +21,7 @@ const POST = async (req: Request) => {
     const storeExist = await prismaDb.store.findFirst({
       where: {
         name,
+        userId,
       },
     })
 
