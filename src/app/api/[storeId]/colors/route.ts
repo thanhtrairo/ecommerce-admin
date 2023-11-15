@@ -2,11 +2,12 @@ import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 
 import prismaDb from '~/lib/prisma-db'
+import { IColor } from '~/lib/types'
 
 const POST = async (req: Request, { params }: { params: { storeId: string } }) => {
   try {
     const { userId } = auth()
-    const { name, value } = await req.json()
+    const { name, value }: IColor = await req.json()
 
     const { storeId } = params
 

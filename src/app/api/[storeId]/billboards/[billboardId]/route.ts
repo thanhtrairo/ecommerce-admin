@@ -2,6 +2,7 @@ import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 
 import prismaDb from '~/lib/prisma-db'
+import { IBillboard } from '~/lib/types'
 
 const DELETE = async (_req: Request, { params }: { params: { storeId: string; billboardId: string } }) => {
   try {
@@ -42,7 +43,7 @@ const DELETE = async (_req: Request, { params }: { params: { storeId: string; bi
 const PATCH = async (req: Request, { params }: { params: { storeId: string; billboardId: string } }) => {
   try {
     const { userId } = auth()
-    const { label, imageUrl } = await req.json()
+    const { label, imageUrl }: IBillboard = await req.json()
 
     const { storeId, billboardId } = params
 

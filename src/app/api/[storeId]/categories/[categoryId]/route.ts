@@ -2,6 +2,7 @@ import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 
 import prismaDb from '~/lib/prisma-db'
+import { ICategory } from '~/lib/types'
 
 const DELETE = async (_req: Request, { params }: { params: { storeId: string; categoryId: string } }) => {
   try {
@@ -43,7 +44,7 @@ const DELETE = async (_req: Request, { params }: { params: { storeId: string; ca
 const PATCH = async (req: Request, { params }: { params: { storeId: string; categoryId: string } }) => {
   try {
     const { userId } = auth()
-    const { name, billboardId } = await req.json()
+    const { name, billboardId }: ICategory = await req.json()
 
     const { storeId, categoryId } = params
 

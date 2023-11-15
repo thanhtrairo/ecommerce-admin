@@ -5,4 +5,9 @@ const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs))
 }
 
-export { cn }
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+})
+
+export { cn, formatter }

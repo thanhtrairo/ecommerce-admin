@@ -2,6 +2,7 @@ import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 
 import prismaDb from '~/lib/prisma-db'
+import { IColor } from '~/lib/types'
 
 const DELETE = async (_req: Request, { params }: { params: { storeId: string; colorId: string } }) => {
   try {
@@ -14,10 +15,6 @@ const DELETE = async (_req: Request, { params }: { params: { storeId: string; co
 
     if (!colorId) {
       return new NextResponse('Color id is required', { status: 400 })
-    }
-
-    if (!storeId) {
-      return new NextResponse('Store id is required', { status: 400 })
     }
 
     const storeByUserId = await prismaDb.store.findFirst({
@@ -46,7 +43,7 @@ const DELETE = async (_req: Request, { params }: { params: { storeId: string; co
 const PATCH = async (req: Request, { params }: { params: { storeId: string; colorId: string } }) => {
   try {
     const { userId } = auth()
-    const { name, value } = await req.json()
+    const { name, value }: IColor = await req.json()
 
     const { colorId, storeId } = params
 
@@ -64,10 +61,6 @@ const PATCH = async (req: Request, { params }: { params: { storeId: string; colo
 
     if (!colorId) {
       return new NextResponse('Color id is required', { status: 400 })
-    }
-
-    if (!storeId) {
-      return new NextResponse('Store id is required', { status: 400 })
     }
 
     const storeByUserId = await prismaDb.store.findFirst({

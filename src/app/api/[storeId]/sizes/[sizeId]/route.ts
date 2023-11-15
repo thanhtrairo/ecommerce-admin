@@ -16,10 +16,6 @@ const DELETE = async (_req: Request, { params }: { params: { storeId: string; si
       return new NextResponse('Size id is required', { status: 400 })
     }
 
-    if (!storeId) {
-      return new NextResponse('Store id is required', { status: 400 })
-    }
-
     const storeByUserId = await prismaDb.store.findFirst({
       where: {
         id: storeId,
@@ -64,10 +60,6 @@ const PATCH = async (req: Request, { params }: { params: { storeId: string; size
 
     if (!sizeId) {
       return new NextResponse('Size id is required', { status: 400 })
-    }
-
-    if (!storeId) {
-      return new NextResponse('Store id is required', { status: 400 })
     }
 
     const storeByUserId = await prismaDb.store.findFirst({

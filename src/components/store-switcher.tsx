@@ -3,8 +3,8 @@
 import * as React from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { Check, ChevronsUpDown, PlusCircle, Store } from 'lucide-react'
+import { Store as IStore } from '@prisma/client'
 
-import { cn } from '~/lib/utils'
 import { Button } from '~/components/ui/button'
 import {
   Command,
@@ -16,8 +16,8 @@ import {
   CommandSeparator,
 } from '~/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
-import { IStore } from '~/models/store'
 import { useStoreModal } from '~/hooks'
+import { cn } from '~/lib/utils'
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 

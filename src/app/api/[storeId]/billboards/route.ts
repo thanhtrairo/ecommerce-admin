@@ -1,13 +1,14 @@
 import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
+
 import prismaDb from '~/lib/prisma-db'
+import { IBillboard } from '~/lib/types'
 
 const POST = async (req: Request, { params }: { params: { storeId: string } }) => {
   try {
     const { userId } = auth()
-    const body = await req.json()
+    const { label, imageUrl }: IBillboard = await req.json()
 
-    const { label, imageUrl } = body
     const { storeId } = params
 
     if (!userId) {
