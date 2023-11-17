@@ -47,4 +47,23 @@ const POST = async (req: Request, { params }: { params: { storeId: string } }) =
   }
 }
 
-export { POST }
+const GET = async (_req: Request, { params }: { params: { storeId: string } }) => {
+  try {
+    const { storeId } = params
+    if (!storeId) {
+      return new NextResponse('Store id id is required', { status: 400 })
+    }
+
+    const sizes = await prismaDb.size.findMany({
+      where: {
+        storeId,
+      },
+    })
+
+    return NextResponse.json(sizes)
+  } catch (error) {
+    return new NextResponse('Internal server', { status: 500 })
+  }
+}
+
+export { POST, GET }

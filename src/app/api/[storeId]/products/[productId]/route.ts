@@ -120,4 +120,29 @@ const PATCH = async (req: Request, { params }: { params: { storeId: string; prod
   }
 }
 
-export { DELETE, PATCH }
+const GET = async (_req: Request, { params }: { params: { productId: string } }) => {
+  try {
+    const { productId } = params
+    if (!productId) {
+      return new NextResponse('Product id is required', { status: 400 })
+    }
+
+    const product = await prismaDb.product.findUnique({
+      where: {
+        id: productId,
+      },
+      include: {
+        images: true,
+        category: true,
+        size: true,
+        color: true,
+      },
+    })
+
+    return NextResponse.json(product)
+  } catch (error) {
+    return new NextResponse('Internal server', { status: 500 })
+  }
+}
+
+export { DELETE, PATCH, GET }

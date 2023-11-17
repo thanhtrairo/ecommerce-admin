@@ -91,4 +91,23 @@ const PATCH = async (req: Request, { params }: { params: { storeId: string; cate
   }
 }
 
-export { DELETE, PATCH }
+const GET = async (_req: Request, { params }: { params: { categoryId: string } }) => {
+  try {
+    const { categoryId } = params
+    if (!categoryId) {
+      return new NextResponse('Category id is required', { status: 400 })
+    }
+
+    const category = await prismaDb.category.findUnique({
+      where: {
+        id: categoryId,
+      },
+    })
+
+    return NextResponse.json(category)
+  } catch (error) {
+    return new NextResponse('Internal server', { status: 500 })
+  }
+}
+
+export { DELETE, PATCH, GET }

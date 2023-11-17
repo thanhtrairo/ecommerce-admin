@@ -90,4 +90,23 @@ const PATCH = async (req: Request, { params }: { params: { storeId: string; colo
   }
 }
 
-export { DELETE, PATCH }
+const GET = async (_req: Request, { params }: { params: { colorId: string } }) => {
+  try {
+    const { colorId } = params
+    if (!colorId) {
+      return new NextResponse('Color id is required', { status: 400 })
+    }
+
+    const color = await prismaDb.color.findUnique({
+      where: {
+        id: colorId,
+      },
+    })
+
+    return NextResponse.json(color)
+  } catch (error) {
+    return new NextResponse('Internal server', { status: 500 })
+  }
+}
+
+export { DELETE, PATCH, GET }

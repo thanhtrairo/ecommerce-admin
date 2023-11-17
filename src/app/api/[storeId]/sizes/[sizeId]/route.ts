@@ -89,4 +89,23 @@ const PATCH = async (req: Request, { params }: { params: { storeId: string; size
   }
 }
 
-export { DELETE, PATCH }
+const GET = async (_req: Request, { params }: { params: { sizeId: string } }) => {
+  try {
+    const { sizeId } = params
+    if (!sizeId) {
+      return new NextResponse('Size id is required', { status: 400 })
+    }
+
+    const size = await prismaDb.size.findUnique({
+      where: {
+        id: sizeId,
+      },
+    })
+
+    return NextResponse.json(size)
+  } catch (error) {
+    return new NextResponse('Internal server', { status: 500 })
+  }
+}
+
+export { DELETE, PATCH, GET }

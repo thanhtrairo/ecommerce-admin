@@ -1,12 +1,13 @@
 import { auth } from '@clerk/nextjs'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 import prismaDb from '~/lib/prisma-db'
 import { IColor } from '~/lib/types'
 
-const POST = async (req: Request, { params }: { params: { storeId: string } }) => {
+const POST = async (req: NextRequest, { params }: { params: { storeId: string } }) => {
   try {
     const { userId } = auth()
+
     const { name, value }: IColor = await req.json()
 
     const { storeId } = params
@@ -48,4 +49,23 @@ const POST = async (req: Request, { params }: { params: { storeId: string } }) =
   }
 }
 
-export { POST }
+const GET = async (_req: Request, { params }: { params: { storeId: string } }) => {
+  try {
+    const { storeId } = params
+    if (!storeId) {
+      return new NextResponse('Store id id is required', { status: 400 })
+    }
+
+    const colors = await prismaDb.color.findMany({
+      where: {
+        storeId,
+      },
+    })
+
+    return NextResponse.json(colors)
+  } catch (error) {
+    return new NextResponse('Internal server', { status: 500 })
+  }
+}
+
+export { POST, GET }

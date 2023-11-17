@@ -90,4 +90,23 @@ const PATCH = async (req: Request, { params }: { params: { storeId: string; bill
   }
 }
 
-export { DELETE, PATCH }
+const GET = async (_req: Request, { params }: { params: { billboardId: string } }) => {
+  try {
+    const { billboardId } = params
+    if (!billboardId) {
+      return new NextResponse('Billboard id is required', { status: 400 })
+    }
+
+    const billboard = await prismaDb.billboard.findUnique({
+      where: {
+        id: billboardId,
+      },
+    })
+
+    return NextResponse.json(billboard)
+  } catch (error) {
+    return new NextResponse('Internal server', { status: 500 })
+  }
+}
+
+export { DELETE, PATCH, GET }
